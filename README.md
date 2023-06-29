@@ -16,7 +16,9 @@ Welcome to Bryan Miller's Mini Message Board, the [twenty seventh assignment](ht
 
 ## Summary
 
-In progress...
+UML Diagram for data models:
+
+![UML Diagram](screenshots/umlDiagram.png)
 
 ## Screenshots
 
