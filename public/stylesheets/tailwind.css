@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.leading-negative {
+  line-height: 0.8;
+}
+
+.leading-negative-2 {
+  line-height: 0.9;
+}
