@@ -11,15 +11,18 @@ const usersRouter = require("./routes/users");
 const app = express();
 
 // connect to db
-const mongoDB = process.env.MONGODB_URL || "";
 const mongoose = require("mongoose");
-
+const mongoDB = process.env.MONGODB_URL || "";
 mongoose.set("strictQuery", false);
 
 main()
   .then(() => console.log("> connected to db"))
   .catch(err => console.log(err));
 async function main() {
+  if (!mongoDB) {
+    console.log("MONGODB_URL not found in .env file");
+    return;
+  }
   await mongoose.connect(mongoDB);
 }
 
