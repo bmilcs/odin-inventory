@@ -1,0 +1,32 @@
+<%- include('partials/header') %>
+
+<section class="my-16" aria-label="hero">
+  <h2
+    class="font-extrabold text-3xl my-3 leading-negative-2 tracking-tight md:text-5xl md:my-5 md:tracking-tighter md:leading-negative"
+  >
+    All Products
+  </h2>
+
+  <div class="bg-neutral-100 rounded-md shadow-md p-4 grid gap-2 grid-cols-[max-content_1fr_min-content_min-content_min-content_min-content_]">
+    <!-- list headers -->
+    <p class="px-2 font-bold">Category</p>
+    <p class="px-2 font-bold">Name</p>
+    <p class="px-2 font-bold">Quantity</p>
+    <p class="px-2 font-bold">Price</p>
+    <p class="px-2 font-bold"></p>
+    <p class="px-2 font-bold"></p>
+
+    <!-- product rows -->
+    <% allProducts.map(product => { %>
+      <p class="px-2"><%= product.category.name %></p>
+      <p class="px-2"><%= product.name %></p>
+      <p class="px-2 ml-auto"><%= product.quantity %></p>
+      <p class="px-2">$<%= product.price %></p>
+      <a class="px-2" href="/inventory/<%= product._id %>/update"><button>Edit</button></a>
+      <a class="px-2" href="/inventory/<%= product._id %>/delete"><button>Delete</button></a>
+      <% }); %>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>
