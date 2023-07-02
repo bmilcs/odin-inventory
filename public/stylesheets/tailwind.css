@@ -9,3 +9,8 @@
 .leading-negative-2 {
   line-height: 0.9;
 }
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
