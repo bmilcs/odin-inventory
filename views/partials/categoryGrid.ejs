@@ -1,46 +1,40 @@
+<div class="card-grid mt-8 gap-6 rounded-md tracking-tight">
+  <% categories.map(category => { %>
+  <article
+    class="rounded-md bg-neutral-800 p-4 text-neutral-200 shadow-md transition-transform duration-200 ease-in-out hover:scale-105"
+  >
+    <p class="px-1 font-bold text-neutral-300">
+      <a class="hover:underline" href="/categories/<%= category._id %>">
+        <%= category.name %>
+      </a>
+    </p>
 
-<div class="rounded-md card-grid gap-6 tracking-tight mt-8">
-  <% categories.map(category => { %> 
-    <article
-      class="bg-neutral-800 text-neutral-200 shadow-md p-4 rounded-md hover:scale-105 transition-transform ease-in-out duration-200"
-    >
-      <p class="px-1 text-neutral-300 font-bold ">
-        <a
-          class="hover:underline"
-          href="/categories/<%= category._id %>"
-        >
-          <%= category.name %>
-        </a>
-      </p>
+    <p class="mb-8 px-1 text-sm"><%= category.description %></p>
 
-      <p class="px-1 mb-8 text-sm"><%= category.description %></p>
-      
-
-      <!-- buttons: view / edit / delete  -->
-      <div class="flex justify-end gap-1">
-        <a class="" href="/categories/<%= category._id %>"
-          ><button
-            class="bg-neutral-700 rounded-md px-4 py-1 text-sm text-neutral-200 hover:bg-lime-600 transition-all duration-300 ease-in-out hover:-translate-y-1"
-          >
-            View
-          </button></a
+    <!-- buttons: view / edit / delete  -->
+    <div class="flex justify-end gap-1">
+      <a class="" href="/categories/<%= category._id %>"
+        ><button
+          class="rounded-md bg-neutral-700 px-4 py-1 text-sm text-neutral-200 transition-all duration-300 ease-in-out hover:-translate-y-1 hover:bg-lime-600"
         >
-        <a class="" href="/categories/<%= category._id %>/update"
-          ><button
-            class="bg-neutral-700 rounded-md px-4 py-1 text-sm text-neutral-200 hover:bg-lime-600 transition-all duration-300 ease-in-out hover:-translate-y-1"
-          >
-            Edit
-          </button></a
+          View
+        </button></a
+      >
+      <a class="" href="/categories/<%= category._id %>/update"
+        ><button
+          class="rounded-md bg-neutral-700 px-4 py-1 text-sm text-neutral-200 transition-all duration-300 ease-in-out hover:-translate-y-1 hover:bg-lime-600"
         >
-        <a class="" href="/categories/<%= category._id %>/delete"
-          ><button
-            class="bg-neutral-700 rounded-md px-4 py-1 text-sm text-neutral-200 hover:bg-lime-600 transition-all duration-300 ease-in-out hover:-translate-y-1"
-          >
-            Delete
-          </button></a
+          Edit
+        </button></a
+      >
+      <a class="" href="/categories/<%= category._id %>/delete"
+        ><button
+          class="rounded-md bg-neutral-700 px-4 py-1 text-sm text-neutral-200 transition-all duration-300 ease-in-out hover:-translate-y-1 hover:bg-lime-600"
         >
-      </div>
-    </article>
+          Delete
+        </button></a
+      >
+    </div>
+  </article>
   <% }); %>
-
 </div>

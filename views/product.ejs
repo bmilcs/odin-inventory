@@ -3,13 +3,13 @@
 <section class="my-16">
   <!-- product name -->
   <h2
-    class="font-extrabold text-3xl leading-negative-2 tracking-tight md:text-4xl md:tracking-tighter md:leading-negative"
+    class="leading-negative-2 md:leading-negative text-3xl font-extrabold tracking-tight md:text-4xl md:tracking-tighter"
   >
     <%= product.name %>
   </h2>
 
   <!-- product category -->
-  <p class="text-neutral-500 text-sm mb-4">
+  <p class="mb-4 text-sm text-neutral-500">
     <a class="hover:underline" href="/categories/<%= product.category._id %>">
       <%= product.category.name %>
     </a>
@@ -23,14 +23,14 @@
   <div class="flex justify-start gap-1">
     <a class="" href="/inventory/<%= product._id %>/update"
       ><button
-        class="bg-neutral-700 rounded-md px-4 py-2 text-sm text-neutral-200 hover:bg-lime-600 transition-all duration-300 ease-in-out hover:-translate-y-1"
+        class="rounded-md bg-neutral-700 px-4 py-2 text-sm text-neutral-200 transition-all duration-300 ease-in-out hover:-translate-y-1 hover:bg-lime-600"
       >
         Edit
       </button></a
     >
     <a class="" href="/inventory/<%= product._id %>/delete"
       ><button
-        class="bg-neutral-700 rounded-md px-4 py-2 text-sm text-neutral-200 hover:bg-lime-600 transition-all duration-300 ease-in-out hover:-translate-y-1"
+        class="rounded-md bg-neutral-700 px-4 py-2 text-sm text-neutral-200 transition-all duration-300 ease-in-out hover:-translate-y-1 hover:bg-lime-600"
       >
         Delete
       </button></a

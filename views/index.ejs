@@ -1,13 +1,13 @@
 <%- include('partials/header') %>
 
-<section class="text-center my-16" aria-label="hero">
+<section class="my-16 text-center" aria-label="hero">
   <h2
-    class="font-extrabold text-6xl leading-negative-2 tracking-tight md:text-8xl md:tracking-tighter md:leading-negative"
+    class="leading-negative-2 md:leading-negative text-6xl font-extrabold tracking-tight md:text-8xl md:tracking-tighter"
   >
     Inventory <span class="block">should be easy</span>
   </h2>
 
-  <p class="max-w-md mx-auto leading-relaxed mt-6">
+  <p class="mx-auto mt-6 max-w-md leading-relaxed">
     Welcome to the Inventory App. This is a simple app to help you manage your
     inventory. Create categories, add products to them and manage your inventory
     with ease!
@@ -15,16 +15,16 @@
 </section>
 
 <section class="text-center" aria-label="hero">
-  <div class="max-w-md mx-auto p-8 justify-around grid grid-cols-2 gap-4">
+  <div class="mx-auto grid max-w-md grid-cols-2 justify-around gap-4 p-8">
     <a
-      class="bg-neutral-700 text-neutral-200 p-4 rounded-md hover:bg-red-500 transition-all duration-300 ease-in-out hover:-translate-y-4"
+      class="rounded-md bg-neutral-700 p-4 text-neutral-200 transition-all duration-300 ease-in-out hover:-translate-y-4 hover:bg-red-500"
       href="/inventory/all"
     >
       <p class="text-7xl font-extrabold"><%= productCount %></p>
       <h4>Products</h4>
     </a>
     <a
-      class="bg-neutral-700 text-neutral-200 p-4 rounded-md hover:bg-red-500 transition-all duration-300 ease-in-out hover:-translate-y-4"
+      class="rounded-md bg-neutral-700 p-4 text-neutral-200 transition-all duration-300 ease-in-out hover:-translate-y-4 hover:bg-red-500"
       href="/categories/all"
     >
       <p class="text-7xl font-extrabold"><%= categoryCount %></p>
