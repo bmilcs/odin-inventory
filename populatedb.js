@@ -26,11 +26,9 @@ async function main() {
 
 async function createAllCategories() {
   console.log("Adding Categories");
-  await Promise.all([
-    createCategory("Sports", "Sporting Goods & Equipment"),
-    createCategory("Electronics", "Computers, TVs, Phones, etc"),
-    createCategory("Toys", "Children's Toys & Games"),
-  ]);
+  await createCategory("Sports", "Sporting Goods & Equipment");
+  await createCategory("Electronics", "Computers, TVs, Phones, etc");
+  await createCategory("Toys", "Children's Toys & Games");
 }
 
 async function createAllProducts() {
