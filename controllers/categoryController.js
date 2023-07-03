@@ -10,8 +10,8 @@ const Product = require("../models/product");
 
 // GET categories all view / homepage
 exports.all = asyncHandler(async (req, res, next) => {
-  const allCategories = await Category.find({}).exec();
-  res.send(allCategories);
+  const categories = await Category.find({}).exec();
+  res.render("allCategories", { categories });
 });
 
 // GET category details by id

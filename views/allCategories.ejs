@@ -1,0 +1,14 @@
+<%- include('partials/header') %>
+
+<section class="my-16" aria-label="hero">
+  <h2
+    class="font-extrabold text-3xl leading-negative-2 tracking-tight md:text-5xl md:tracking-tighter md:leading-negative"
+  >
+    All Categories
+  </h2>
+  <p class="mt-2">Here is a full list of all categories:</p>
+
+  <%- include('partials/categoryGrid', { categories }) %>
+</section>
+
+<%- include('partials/footer') %>
