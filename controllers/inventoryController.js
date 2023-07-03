@@ -28,7 +28,7 @@ exports.all = asyncHandler(async (req, res, next) => {
     .sort({ category: 1, name: 1 })
     .exec();
 
-  res.render("allProducts", { products });
+  res.render("productList", { products });
 });
 
 // GET a product's details by id
