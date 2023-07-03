@@ -1,4 +1,5 @@
 const asyncHandler = require("express-async-handler");
+const mongoose = require("mongoose");
 
 const Product = require("../models/product");
 const Category = require("../models/category");
@@ -34,12 +35,11 @@ exports.all = asyncHandler(async (req, res, next) => {
 exports.productById = asyncHandler(async (req, res, next) => {
   const productId = req.params.id;
 
-  // mongodb queries with an _id.length > 24 chars immediately throw an error,
+  // mongodb queries that are given an invalid id immediately throw an error,
   // preventing the product === null conditional below from running
-  const product =
-    productId.length <= 24
-      ? await Product.findById(productId).populate("category").exec()
-      : null;
+  const product = mongoose.Types.ObjectId.isValid(productId)
+    ? await Product.findById(productId).populate("category").exec()
+    : null;
 
   if (product === null) {
     const err = new Error("Product not found");
