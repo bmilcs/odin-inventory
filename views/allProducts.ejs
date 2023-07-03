@@ -8,19 +8,11 @@
   </h2>
   <p class="mb-8 mt-2">Here is a full list of your inventory:</p>
 
-  <div class="rounded-md product-grid gap-4 tracking-tight">
-    <!-- list headers -->
-    <!-- <p class="px-3 font-bold">Category</p>
-    <p class="px-3 font-bold">Name</p>
-    <p class="px-3 font-bold">Quantity</p>
-    <p class="px-3 font-bold">Price</p>
-    <p class=""></p>
-    <p class=""></p> -->
-
+  <div class="rounded-md product-grid gap-6 tracking-tight">
     <!-- product rows -->
     <% allProducts.map(product => { %>
     <article
-      class="bg-neutral-200 p-4 rounded-md hover:scale-105 transition-transform ease-in-out duration-200"
+      class="bg-neutral-200 shadow-md p-4 rounded-md hover:scale-105 transition-transform ease-in-out duration-200"
     >
       <p class="px-1 text-neutral-500 text-sm"><%= product.category.name %></p>
       <p class="px-1 font-bold"><%= product.name %></p>
