@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler");
 
 const Category = require("../models/category");
+const Product = require("../models/product");
 
 //
 // READ CATEGORIES
@@ -14,8 +15,22 @@ exports.all = asyncHandler(async (req, res, next) => {
 
 // GET category details by id
 exports.categoryById = asyncHandler(async (req, res, next) => {
-  const category = await Category.findById(req.params.id).exec();
-  res.send(category);
+  const categoryId = req.params.id;
+
+  // mongodb queries with an _id.length > 24 chars immediately throw an error,
+  // preventing the product === null conditional below from running
+  const [category, products] = await Promise.all([
+    categoryId.length <= 24 ? await Category.findById(categoryId).exec() : null,
+    Product.find({ category: categoryId }, "name price quantity").exec(),
+  ]);
+
+  if (category === null) {
+    const err = new Error("Category not found");
+    err.status = 404;
+    return next(err);
+  }
+
+  res.render("category", { category, products });
 });
 
 //
