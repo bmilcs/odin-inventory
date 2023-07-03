@@ -22,12 +22,12 @@ exports.index = asyncHandler(async (req, res, next) => {
 
 // GET all products in the inventory
 exports.all = asyncHandler(async (req, res, next) => {
-  const allProducts = await Product.find({}, "name category price quantity")
+  const products = await Product.find({}, "name category price quantity")
     .populate("category")
     .sort({ category: 1, name: 1 })
     .exec();
 
-  res.render("allProducts", { allProducts });
+  res.render("allProducts", { products });
 });
 
 // GET a product's details by id
