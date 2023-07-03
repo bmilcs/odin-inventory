@@ -1,7 +1,7 @@
 <%- include('partials/header') %>
 
 <section class="my-16">
-  <!-- category name -->
+  <!-- category name & description -->
   <h2
     class="leading-negative-2 md:leading-negative text-3xl font-extrabold tracking-tight md:text-5xl md:tracking-tighter"
   >
@@ -28,15 +28,27 @@
     >
   </div>
 
-  <!-- category name -->
+  <!-- display existing products in category  -->
   <h2
     class="leading-negative-2 md:leading-negative mt-16 text-2xl font-extrabold tracking-tight md:text-3xl md:tracking-tighter"
   >
     Products in <%= category.name %>
   </h2>
 
-  <!-- product grid -->
-  <%- include('partials/productGrid', { products }) %>
+  <% if (products.length > 0) { %>
+  <!-- render product grid -->
+  <%- include('partials/productGrid', { products }) %> <% } else { %>
+  <!-- no products exist -->
+  <p class="mb-8 mt-4">There are no products in this category.</p>
+
+  <a class="" href="/inventory/create"
+    ><button
+      class="rounded-md bg-neutral-700 px-4 py-2 text-sm text-neutral-200 transition-all duration-300 ease-in-out hover:-translate-y-1 hover:bg-blue-600"
+    >
+      Create Product
+    </button></a
+  >
+  <% } %>
 </section>
 
 <%- include('partials/footer') %>

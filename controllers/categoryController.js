@@ -171,10 +171,37 @@ exports.updateCategoryPost = [
 
 // GET delete category form
 exports.deleteCategoryGet = asyncHandler(async (req, res, next) => {
-  res.send("delete category: form render");
+  const categoryId = req.params.id;
+
+  const [category, products] = await Promise.all([
+    mongoose.Types.ObjectId.isValid(categoryId)
+      ? await Category.findById({ _id: categoryId }).exec()
+      : null,
+    mongoose.Types.ObjectId.isValid(categoryId)
+      ? await Product.find({ category: categoryId }).exec()
+      : null,
+  ]);
+
+  res.render("categoryDelete", { category, products });
 });
 
 // POST delete category in db
 exports.deleteCategoryPost = asyncHandler(async (req, res, next) => {
-  res.send("delete category: perform delete");
+  const [category, products] = await Promise.all([
+    mongoose.Types.ObjectId.isValid(req.params.id)
+      ? await Category.findById({ _id: req.params.id }).exec()
+      : null,
+    mongoose.Types.ObjectId.isValid(req.params.id)
+      ? await Product.find({ category: req.params.id }).exec()
+      : null,
+  ]);
+
+  if (products.length > 0) {
+    // category has products, render form again with products
+    res.render("categoryDelete", { category, products });
+  } else {
+    // category has no products, delete category
+    await Category.findByIdAndRemove(req.params.id).exec();
+    res.redirect("/categories/all");
+  }
 });
