@@ -1,0 +1,63 @@
+<%- include('partials/header') %>
+<section class="my-16" aria-label="hero">
+  <h2
+    class="leading-negative-2 md:leading-negative text-center text-3xl font-extrabold tracking-tight md:text-start md:text-5xl md:tracking-tighter"
+  >
+    <%= title %>
+  </h2>
+  <p class="mt-2 text-center md:text-start">
+    Please fill out and submit the form below
+  </p>
+
+  <form
+    action=""
+    method="POST"
+    class="mx-auto mt-16 rounded-md bg-neutral-800 p-8 shadow-md"
+  >
+    <!-- name -->
+    <div class="mb-4">
+      <label for="name" class="mb-2 block text-sm font-bold text-neutral-100"
+        >Category Name</label
+      >
+      <input
+        type="text"
+        name="name"
+        id="name"
+        required
+        class="block w-full rounded-lg border border-gray-300 bg-neutral-700 p-2.5 text-sm text-neutral-50 focus:border-blue-600 focus:ring-blue-600"
+        value="<%= category.name ? category.name : '' %>"
+      />
+    </div>
+
+    <!-- description -->
+    <div class="mb-4">
+      <label
+        for="description"
+        class="mb-2 block text-sm font-bold text-neutral-100"
+        >Category Description</label
+      >
+      <input
+        type="text"
+        name="description"
+        id="description"
+        value="<%= category ? category.description : '' %>"
+        required
+        class="block w-full rounded-lg border border-gray-300 bg-neutral-700 p-2.5 text-sm text-neutral-100 focus:border-blue-600 focus:ring-blue-600"
+      />
+    </div>
+
+    <!-- errors -->
+    <% errors.forEach(error => { %>
+    <p class="text-red-500"><%= error.msg %></p>
+    <% }) %>
+
+    <!-- submit -->
+    <button
+      class="mt-4 rounded-md bg-blue-600 px-4 py-2 text-sm font-bold text-neutral-100 transition-all duration-300 ease-in-out hover:-translate-y-1 hover:bg-blue-600"
+    >
+      Submit
+    </button>
+  </form>
+</section>
+
+<%- include('partials/footer') %>

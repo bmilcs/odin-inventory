@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 
 const Category = require("../models/category");
 const Product = require("../models/product");
+const { body, validationResult } = require("express-validator");
 
 //
 // READ CATEGORIES
@@ -47,13 +48,62 @@ exports.categoryById = asyncHandler(async (req, res, next) => {
 
 // GET create category form
 exports.createCategoryGet = asyncHandler(async (req, res, next) => {
-  res.send("create category: form render");
+  res.render("categoryForm", {
+    title: "Create A Category",
+    category: { name: "", description: "" },
+    errors: [],
+  });
 });
 
 // POST create category in db
-exports.createCategoryPost = asyncHandler(async (req, res, next) => {
-  res.send("create category: perform create");
-});
+exports.createCategoryPost = [
+  // validate and sanitize fields
+  body("name", "Category name must be at least 3 characters long.")
+    .trim()
+    .isLength({ min: 3 })
+    .escape(),
+  body(
+    "description",
+    "Category description must be at least 10 characters long.",
+  )
+    .trim()
+    .isLength({ min: 10 })
+    .escape(),
+
+  asyncHandler(async (req, res, next) => {
+    // extract validation errors from request
+    const errors = validationResult(req);
+
+    // create new category object with sanitized data
+    const category = new Category({
+      name: req.body.name,
+      description: req.body.description,
+    });
+
+    if (!errors.isEmpty()) {
+      // there are errors, render form again with sanitized values/error messages
+      res.render("categoryForm", {
+        title: "Create A Category",
+        category,
+        errors: errors.array(),
+      });
+    } else {
+      // data from form is valid
+      // make sure category with same name doesn't already exist
+      const existingCategory = await Category.findOne({
+        name: req.body.name,
+      }).exec();
+
+      if (existingCategory) {
+        res.redirect(existingCategory.url);
+      } else {
+        // save category to db
+        await category.save();
+        res.redirect(category.url);
+      }
+    }
+  }),
+];
 
 //
 // UPDATE PRODUCTS
@@ -61,7 +111,17 @@ exports.createCategoryPost = asyncHandler(async (req, res, next) => {
 
 // GET update category form
 exports.updateCategoryGet = asyncHandler(async (req, res, next) => {
-  res.send("update category: form render");
+  const categoryId = req.params.id;
+
+  const category = mongoose.Types.ObjectId.isValid(categoryId)
+    ? await Category.findById({ _id: categoryId }).exec()
+    : null;
+
+  res.render("categoryForm", {
+    title: "Update Category",
+    category,
+    errors: [],
+  });
 });
 
 // POST update category in db
