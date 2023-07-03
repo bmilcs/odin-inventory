@@ -125,9 +125,45 @@ exports.updateCategoryGet = asyncHandler(async (req, res, next) => {
 });
 
 // POST update category in db
-exports.updateCategoryPost = asyncHandler(async (req, res, next) => {
-  res.send("update category: perform update");
-});
+exports.updateCategoryPost = [
+  // validate and sanitize fields
+  body("name", "Category name must be at least 3 characters long.")
+    .trim()
+    .isLength({ min: 3 })
+    .escape(),
+  body(
+    "description",
+    "Category description must be at least 10 characters long.",
+  )
+    .trim()
+    .isLength({ min: 10 })
+    .escape(),
+
+  asyncHandler(async (req, res, next) => {
+    // extract validation errors from request
+    const errors = validationResult(req);
+
+    // create new category object with sanitized data
+    const category = new Category({
+      name: req.body.name,
+      description: req.body.description,
+      _id: req.params.id,
+    });
+
+    if (!errors.isEmpty()) {
+      // there are errors, render form again with sanitized values/error messages
+      res.render("categoryForm", {
+        title: "Update A Category",
+        category,
+        errors: errors.array(),
+      });
+    } else {
+      // data from form is valid, update existing category with new data
+      await Category.findByIdAndUpdate(req.params.id, category).exec();
+      res.redirect(category.url);
+    }
+  }),
+];
 
 //
 // DELETE PRODUCTS
