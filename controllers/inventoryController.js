@@ -32,9 +32,22 @@ exports.all = asyncHandler(async (req, res, next) => {
 
 // GET a product's details by id
 exports.productById = asyncHandler(async (req, res, next) => {
-  const product = await Product.findById(req.params.id).exec();
-  res.send(product);
-  // res.render("product", { product: product });
+  const productId = req.params.id;
+
+  // mongodb queries with an _id.length > 24 chars immediately throw an error,
+  // preventing the product === null conditional below from running
+  const product =
+    productId.length <= 24
+      ? await Product.findById(productId).populate("category").exec()
+      : null;
+
+  if (product === null) {
+    const err = new Error("Product not found");
+    err.status = 404;
+    return next(err);
+  }
+
+  res.render("product", { product: product });
 });
 
 //
