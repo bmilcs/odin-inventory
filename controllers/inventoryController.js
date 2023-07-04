@@ -242,10 +242,35 @@ exports.updateProductPost = [
 
 // GET delete product form
 exports.deleteProductGet = asyncHandler(async (req, res, next) => {
-  res.send("delete product: form render");
+  const productId = req.params.id;
+  const product = mongoose.Types.ObjectId.isValid(productId)
+    ? await Product.findById(productId).exec()
+    : null;
+
+  // product not found: throw an error
+  if (product === null) {
+    const err = new Error("Product not found");
+    err.status = 404;
+    return next(err);
+  }
+
+  res.render("productDelete", { title: "Delete Product", product });
 });
 
 // POST delete product in db
 exports.deleteProductPost = asyncHandler(async (req, res, next) => {
-  res.send("delete product: perform delete");
+  const productId = req.params.id;
+  const product = mongoose.Types.ObjectId.isValid(productId)
+    ? await Product.findById(productId).exec()
+    : null;
+
+  // product not found: throw an error
+  if (product === null) {
+    const err = new Error("Product not found");
+    err.status = 404;
+    return next(err);
+  }
+
+  await Product.findByIdAndRemove(productId).exec();
+  res.redirect("/inventory/all");
 });
