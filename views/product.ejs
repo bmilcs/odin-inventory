@@ -1,48 +1,54 @@
 <%- include('partials/header') %>
 
-<section class="my-16">
+<section class="rounded-md p-4 md:p-8">
   <% if (product.image) { %>
-  <img
-    src="<%= product.image %>"
-    alt="<%= product.name %>"
-    class="max-w-50 mb-8 max-h-96 w-full rounded-md object-contain"
-  />
+  <div
+    class="w-100 mb-8 flex items-center justify-center rounded-md bg-white p-8 md:mb-16"
+  >
+    <img
+      src="<%= product.image %>"
+      alt="<%= product.name %>"
+      class="max-w-50 max-h-96 w-full rounded-md object-contain"
+    />
+  </div>
   <% } %>
 
-  <!-- product name -->
-  <h2
-    class="leading-negative-2 md:leading-negative text-3xl font-extrabold tracking-tight md:text-4xl md:tracking-tighter"
-  >
-    <%= product.name %>
-  </h2>
-
-  <!-- product category -->
-  <p class="mb-4 text-sm text-neutral-500">
-    <a class="hover:underline" href="/categories/<%= product.category._id %>">
-      <%= product.category.name %>
-    </a>
-  </p>
-
-  <p class="mt-4 max-w-screen-md"><%= product.description %></p>
-  <p class="mt-4 text-xl font-bold">$<%= product.price %></p>
-  <p class="mb-8 text-sm"><%= product.quantity %> In Stock</p>
-
-  <!-- action buttons: edit & delete -->
-  <div class="flex justify-start gap-1">
-    <a class="" href="/inventory/<%= product._id %>/update"
-      ><button
-        class="rounded-md bg-neutral-700 px-4 py-2 text-sm text-neutral-200 transition-all duration-300 ease-in-out hover:-translate-y-1 hover:bg-blue-600"
-      >
-        Edit
-      </button></a
+  <div class="mx-auto mb-8 max-w-screen-md">
+    <!-- product name -->
+    <h2
+      class="leading-negative-2 md:leading-negative text-3xl font-extrabold tracking-tight md:text-4xl md:tracking-tighter"
     >
-    <a class="" href="/inventory/<%= product._id %>/delete"
-      ><button
-        class="rounded-md bg-neutral-700 px-4 py-2 text-sm text-neutral-200 transition-all duration-300 ease-in-out hover:-translate-y-1 hover:bg-blue-600"
+      <%= product.name %>
+    </h2>
+
+    <!-- product category -->
+    <p class="mb-4 text-sm text-neutral-500">
+      <a class="hover:underline" href="/categories/<%= product.category._id %>">
+        <%= product.category.name %>
+      </a>
+    </p>
+
+    <p class="mt-4 max-w-screen-md"><%= product.description %></p>
+    <p class="mt-4 text-xl font-bold">$<%= product.price %></p>
+    <p class="mb-8 text-sm"><%= product.quantity %> In Stock</p>
+
+    <!-- action buttons: edit & delete -->
+    <div class="flex justify-start gap-1">
+      <a class="" href="/inventory/<%= product._id %>/update"
+        ><button
+          class="rounded-md bg-neutral-700 px-4 py-2 text-sm text-neutral-200 transition-all duration-300 ease-in-out hover:-translate-y-1 hover:bg-blue-600"
+        >
+          Edit
+        </button></a
       >
-        Delete
-      </button></a
-    >
+      <a class="" href="/inventory/<%= product._id %>/delete"
+        ><button
+          class="rounded-md bg-neutral-700 px-4 py-2 text-sm text-neutral-200 transition-all duration-300 ease-in-out hover:-translate-y-1 hover:bg-blue-600"
+        >
+          Delete
+        </button></a
+      >
+    </div>
   </div>
 </section>
 
