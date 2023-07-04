@@ -18,6 +18,7 @@ const ProductSchema = new Schema({
   category: { type: Schema.Types.ObjectId, ref: "Category", required: true },
   price: { type: Number, required: true },
   quantity: { type: Number, required: true },
+  image: { type: String, required: false },
   createdOn: {
     type: Date,
     default: Date.now,

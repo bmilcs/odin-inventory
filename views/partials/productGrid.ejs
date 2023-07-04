@@ -1,46 +1,60 @@
 <div class="card-grid mt-8 gap-6 rounded-md tracking-tight">
   <% products.map(product => { %>
   <article
-    class="rounded-md bg-neutral-800 p-4 text-neutral-200 shadow-md transition-transform duration-200 ease-in-out hover:scale-105"
+    class="rounded-md bg-white text-neutral-800 overflow-hidden transition-transform duration-200 ease-in-out hover:scale-105 border-solid border-2 border-neutral-300"
   >
-    <!-- category is optional -->
-    <% if (product.category?.name && product.category?._id) { %>
-
-    <p class="px-1 text-sm text-neutral-300">
-      <a class="hover:underline" href="/categories/<%= product.category._id %>">
-        <%= product.category.name %>
-      </a>
-    </p>
-    <% } %>
-
-    <p class="px-1 font-bold"><%= product.name %></p>
-    <p class="px-1">$<%= product.price %></p>
-    <p class="mb-4 px-1 text-sm"><%= product.quantity %> In Stock</p>
-
-    <!-- buttons: view / edit / delete  -->
-    <div class="flex justify-end gap-1">
-      <a class="" href="/inventory/<%= product._id %>"
-        ><button
-          class="rounded-md bg-neutral-700 px-4 py-1 text-sm text-neutral-200 transition-all duration-300 ease-in-out hover:-translate-y-1 hover:bg-blue-600"
-        >
-          View
-        </button></a
-      >
-      <a class="" href="/inventory/<%= product._id %>/update"
-        ><button
-          class="rounded-md bg-neutral-700 px-4 py-1 text-sm text-neutral-200 transition-all duration-300 ease-in-out hover:-translate-y-1 hover:bg-blue-600"
-        >
-          Edit
-        </button></a
-      >
-      <a class="" href="/inventory/<%= product._id %>/delete"
-        ><button
-          class="rounded-md bg-neutral-700 px-4 py-1 text-sm text-neutral-200 transition-all duration-300 ease-in-out hover:-translate-y-1 hover:bg-blue-600"
-        >
-          Delete
-        </button></a
-      >
+    <div class="w-100 h-40 bg-white py-4 grid place-items-center">
+      <% if (product.image) { %>
+        <img
+          src="<%= product.image %>"
+          alt="<%= product.name %>"
+          class="max-w-100 max-h-24 w-full rounded-md object-contain"
+        />
+      <% } else { %>
+        <p class="text-neutral-500">No Image</p>
+      <% } %>
     </div>
+
+    <div class="p-4">
+      <!-- category is optional -->
+      <% if (product.category?.name && product.category?._id) { %>
+
+      <p class="px-1 text-sm text-neutral-700">
+        <a class="hover:underline" href="/categories/<%= product.category._id %>">
+          <%= product.category.name %>
+        </a>
+      </p>
+      <% } %>
+
+      <p class="px-1 font-bold"><%= product.name %></p>
+      <p class="px-1">$<%= product.price %></p>
+      <p class="mb-4 px-1 text-sm"><%= product.quantity %> In Stock</p>
+
+      <!-- buttons: view / edit / delete  -->
+      <div class="flex justify-center gap-1">
+        <a class="" href="/inventory/<%= product._id %>"
+          ><button
+            class="rounded-md bg-neutral-700 px-4 py-1 text-sm text-neutral-200 transition-all duration-300 ease-in-out hover:-translate-y-1 hover:bg-blue-600"
+          >
+            View
+          </button></a
+        >
+        <a class="" href="/inventory/<%= product._id %>/update"
+          ><button
+            class="rounded-md bg-neutral-700 px-4 py-1 text-sm text-neutral-200 transition-all duration-300 ease-in-out hover:-translate-y-1 hover:bg-blue-600"
+          >
+            Edit
+          </button></a
+        >
+        <a class="" href="/inventory/<%= product._id %>/delete"
+          ><button
+            class="rounded-md bg-neutral-700 px-4 py-1 text-sm text-neutral-200 transition-all duration-300 ease-in-out hover:-translate-y-1 hover:bg-blue-600"
+          >
+            Delete
+          </button></a
+        >
+      </div>
+    </div>  
   </article>
   <% }); %>
 </div>

@@ -1,9 +1,37 @@
 const asyncHandler = require("express-async-handler");
 const mongoose = require("mongoose");
 const { validationResult, body } = require("express-validator");
-
 const Product = require("../models/product");
 const Category = require("../models/category");
+const multer = require("multer");
+const fs = require("fs");
+const path = require("path");
+
+// configure Multer storage for photo uploads
+
+const imageFileFilter = function (req, file, cb) {
+  // Check if the file is an image
+  if (!file.mimetype.startsWith("image/")) {
+    return cb(new Error("Only image files are allowed."), false);
+  }
+
+  // Accept the file
+  cb(null, true);
+};
+
+const storage = multer.diskStorage({
+  destination: "public/images/",
+  filename: function (req, file, cb) {
+    // Generate a unique filename with the original extension
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+    const originalExtension = file.originalname.split(".").pop();
+    const filename =
+      file.fieldname + "-" + uniqueSuffix + "." + originalExtension;
+    cb(null, filename);
+  },
+});
+
+const upload = multer({ storage: storage, fileFilter: imageFileFilter });
 
 //
 // READ PRODUCTS
@@ -24,7 +52,7 @@ exports.index = asyncHandler(async (req, res, next) => {
 
 // GET all products in the inventory
 exports.all = asyncHandler(async (req, res, next) => {
-  const products = await Product.find({}, "name category price quantity")
+  const products = await Product.find({}, "name category price quantity image")
     .populate("category")
     .sort({ category: 1, name: 1 })
     .exec();
@@ -68,6 +96,8 @@ exports.createProductGet = asyncHandler(async (req, res, next) => {
 
 // POST create product in db
 exports.createProductPost = [
+  upload.single("image"),
+
   body("name", "Name must be at least 3 characters long")
     .trim()
     .isLength({ min: 3 })
@@ -88,9 +118,10 @@ exports.createProductPost = [
       category: req.body.category,
       price: req.body.price,
       quantity: req.body.quantity,
+      image: `/images/${req.file.filename}`,
     });
 
-    // if there are errors, re-render the form with sanitized values/error messages
+    // if there are errors, render the form with sanitized values / error messages
     if (!errors.isEmpty()) {
       const categories = await Category.find({}).exec();
       res.render("productForm", {
@@ -160,6 +191,8 @@ exports.updateProductGet = asyncHandler(async (req, res, next) => {
 
 // POST update product in db
 exports.updateProductPost = [
+  upload.single("image"),
+
   body("name", "Name must be at least 3 characters long")
     .trim()
     .isLength({ min: 3 })
@@ -174,12 +207,19 @@ exports.updateProductPost = [
   asyncHandler(async (req, res, next) => {
     const errors = validationResult(req);
 
+    // update product image if a new file is uploaded
+    const originalProduct = await Product.findById(req.params.id).exec();
+    const image = req.file
+      ? `/images/${req.file.filename}`
+      : originalProduct.image;
+
     const product = new Product({
       name: req.body.name,
       description: req.body.description,
       category: req.body.category,
       price: req.body.price,
       quantity: req.body.quantity,
+      image: image,
       _id: req.params.id,
     });
 
@@ -188,8 +228,7 @@ exports.updateProductPost = [
       // mark the product's category as selected in the category list
       const categories = await Category.find().exec();
       for (const category of categories) {
-        if (product.category.toString() === category._id.toString()) {
-          console.log("selected category found", category.name);
+        if (product.category?.toString() === category._id.toString()) {
           category.selected = true;
           break;
         }
@@ -215,7 +254,6 @@ exports.updateProductPost = [
       const categories = await Category.find().exec();
       for (const category of categories) {
         if (product.category.toString() === category._id.toString()) {
-          console.log("selected category found", category.name);
           category.selected = true;
           break;
         }
@@ -230,7 +268,18 @@ exports.updateProductPost = [
       return;
     }
 
-    // no errors: update product in db & redirect to product page
+    // no errors
+    // delete old image if a new one was uploaded
+    if (req.file && originalProduct.image) {
+      fs.unlink(
+        path.join(__dirname, `../public/${originalProduct.image}`),
+        err => {
+          if (err) console.log({ err });
+        },
+      );
+    }
+
+    // update product in db & redirect to product page
     await Product.findByIdAndUpdate(req.params.id, product, {}).exec();
     res.redirect(product.url);
   }),
@@ -269,6 +318,13 @@ exports.deleteProductPost = asyncHandler(async (req, res, next) => {
     const err = new Error("Product not found");
     err.status = 404;
     return next(err);
+  }
+
+  // delete image if it exists
+  if (product.image) {
+    fs.unlink(path.join(__dirname, `../public/${product.image}`), err => {
+      if (err) console.log({ err });
+    });
   }
 
   await Product.findByIdAndRemove(productId).exec();

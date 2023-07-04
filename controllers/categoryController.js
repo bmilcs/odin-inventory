@@ -28,7 +28,7 @@ exports.categoryById = asyncHandler(async (req, res, next) => {
     mongoose.Types.ObjectId.isValid(categoryId)
       ? await Product.find(
           { category: categoryId },
-          "name price quantity"
+          "name price quantity image",
         ).exec()
       : null,
   ]);
@@ -64,7 +64,7 @@ exports.createCategoryPost = [
     .escape(),
   body(
     "description",
-    "Category description must be at least 10 characters long."
+    "Category description must be at least 10 characters long.",
   )
     .trim()
     .isLength({ min: 10 })
@@ -135,7 +135,7 @@ exports.updateCategoryPost = [
     .escape(),
   body(
     "description",
-    "Category description must be at least 10 characters long."
+    "Category description must be at least 10 characters long.",
   )
     .trim()
     .isLength({ min: 10 })

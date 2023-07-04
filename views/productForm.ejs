@@ -12,6 +12,7 @@
   <form
     action=""
     method="POST"
+    enctype="multipart/form-data"
     class="mx-auto mt-16 rounded-md bg-neutral-800 p-8 shadow-md"
   >
     <!-- category dropdown -->
@@ -99,6 +100,17 @@
       />
     </div>
 
+    <!-- picture view & upload -->
+    <div class="my-8">
+      <img
+        src="<%= product?.image ? product.image : '' %>"
+        alt="<%= product?.name ? product.name : '' %>"
+        class="my-4 h-32 w-32 rounded-md object-cover"
+      />
+
+      <input type="file" name="image" class="text-neutral-100" />
+    </div>
+
     <!-- errors -->
     <% errors.forEach(error => { %>
     <p class="text-red-500"><%= error.msg %></p>
@@ -106,7 +118,7 @@
 
     <!-- submit -->
     <button
-      class="mt-4 rounded-md bg-blue-600 px-4 py-2 text-sm font-bold text-neutral-100 transition-all duration-300 ease-in-out hover:-translate-y-1 hover:bg-blue-600"
+      class="rounded-md bg-blue-600 px-4 py-2 text-sm font-bold text-neutral-100 transition-all duration-300 ease-in-out hover:-translate-y-1 hover:bg-blue-600"
     >
       Submit
     </button>

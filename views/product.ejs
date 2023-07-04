@@ -1,6 +1,14 @@
 <%- include('partials/header') %>
 
 <section class="my-16">
+  <% if (product.image) { %>
+  <img
+    src="<%= product.image %>"
+    alt="<%= product.name %>"
+    class="max-w-50 mb-8 max-h-96 w-full rounded-md object-contain"
+  />
+  <% } %>
+
   <!-- product name -->
   <h2
     class="leading-negative-2 md:leading-negative text-3xl font-extrabold tracking-tight md:text-4xl md:tracking-tighter"
