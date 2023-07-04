@@ -29,6 +29,7 @@ async function createAllCategories() {
   await createCategory("Sports", "Sporting Goods & Equipment");
   await createCategory("Electronics", "Computers, TVs, Phones, etc");
   await createCategory("Toys", "Children's Toys & Games");
+  await createCategory("Home Decor", "Decorative Items for Your Home");
 }
 
 async function createAllProducts() {
@@ -89,6 +90,76 @@ async function createAllProducts() {
       24.99,
       15,
       categories[2],
+    ),
+    createProduct(
+      "ProFit Soccer Ball",
+      "Take your soccer skills to the next level with the ProFit Soccer Ball. This high-quality ball is designed for optimal performance and durability. Its superior construction ensures excellent control and precision during gameplay. Whether you're practicing or competing, the ProFit Soccer Ball is your go-to choice.",
+      16.99,
+      12,
+      categories[0],
+    ),
+    createProduct(
+      "TechWiz Gaming Mouse",
+      "Enhance your gaming experience with the TechWiz Gaming Mouse. Engineered for precision and comfort, this mouse offers exceptional control and responsiveness. Its ergonomic design and customizable features make it a perfect fit for gamers of all levels. Get ready to level up your gaming skills with the TechWiz Gaming Mouse.",
+      49.99,
+      6,
+      categories[1],
+    ),
+    createProduct(
+      "AdventureExplorer Outdoor Set",
+      "Encourage outdoor exploration with the AdventureExplorer Outdoor Set. This comprehensive set includes essential gear for outdoor adventures, such as a compass, flashlight, and binoculars. It's designed to spark curiosity and provide hands-on learning experiences in nature. Equip your young explorer with the AdventureExplorer Outdoor Set.",
+      34.99,
+      9,
+      categories[2],
+    ),
+    createProduct(
+      "FitPro Dumbbell Set",
+      "Build strength and tone your muscles with the FitPro Dumbbell Set. This set includes a range of dumbbell weights that allow you to customize your workout. The durable construction and comfortable grip ensure a safe and effective exercise routine. Take your fitness journey to the next level with the FitPro Dumbbell Set.",
+      49.99,
+      8,
+      categories[0],
+    ),
+    createProduct(
+      "SmartGear Smartwatch",
+      "Stay connected and track your fitness goals with the SmartGear Smartwatch. This sleek and stylish smartwatch offers a range of features, including heart rate monitoring, step tracking, and smartphone notifications. With its intuitive interface and long-lasting battery life, it's the perfect companion for your active lifestyle.",
+      129.99,
+      4,
+      categories[1],
+    ),
+    createProduct(
+      "CreativeBuilder Building Blocks",
+      "Unleash your creativity with the CreativeBuilder Building Blocks set. This set includes a variety of colorful blocks that can be assembled into endless shapes and structures. It promotes fine motor skills, spatial awareness, and imaginative play. Let your imagination soar with the CreativeBuilder Building Blocks.",
+      19.99,
+      15,
+      categories[2],
+    ),
+    createProduct(
+      "CozyHome Throw Blanket",
+      "Wrap yourself in warmth and comfort with the CozyHome Throw Blanket. This soft and luxurious blanket is perfect for cozying up on chilly evenings. With its stylish design and high-quality materials, it adds a touch of elegance to any home decor.",
+      39.99,
+      10,
+      categories[3],
+    ),
+    createProduct(
+      "AromaSense Essential Oil Diffuser",
+      "Create a soothing atmosphere with the AromaSense Essential Oil Diffuser. This diffuser uses ultrasonic technology to disperse a fine mist of essential oils, filling your space with delightful aromas. It features adjustable settings and LED lighting for a personalized and relaxing experience.",
+      29.99,
+      8,
+      categories[3],
+    ),
+    createProduct(
+      "ZenGarden Meditation Kit",
+      "Find peace and serenity with the ZenGarden Meditation Kit. This kit includes a miniature zen garden, a set of meditation stones, and a wooden rake. It provides a calming and meditative experience, helping you achieve a state of tranquility and mindfulness.",
+      24.99,
+      5,
+      categories[3],
+    ),
+    createProduct(
+      "ElegantCandles Scented Candle Set",
+      "Set the mood and create a cozy ambiance with the ElegantCandles Scented Candle Set. This set includes a collection of beautifully scented candles in various sizes and fragrances. It's the perfect addition to any home decor, enhancing relaxation and creating a warm and inviting atmosphere.",
+      19.99,
+      12,
+      categories[3],
     ),
   ]);
 }
