@@ -1,9 +1,9 @@
 const asyncHandler = require("express-async-handler");
 const mongoose = require("mongoose");
+const { body, validationResult } = require("express-validator");
 
 const Category = require("../models/category");
 const Product = require("../models/product");
-const { body, validationResult } = require("express-validator");
 
 //
 // READ CATEGORIES
@@ -28,7 +28,7 @@ exports.categoryById = asyncHandler(async (req, res, next) => {
     mongoose.Types.ObjectId.isValid(categoryId)
       ? await Product.find(
           { category: categoryId },
-          "name price quantity",
+          "name price quantity"
         ).exec()
       : null,
   ]);
@@ -64,7 +64,7 @@ exports.createCategoryPost = [
     .escape(),
   body(
     "description",
-    "Category description must be at least 10 characters long.",
+    "Category description must be at least 10 characters long."
   )
     .trim()
     .isLength({ min: 10 })
@@ -80,28 +80,30 @@ exports.createCategoryPost = [
       description: req.body.description,
     });
 
+    // there are errors, render form again with sanitized values/error messages
     if (!errors.isEmpty()) {
-      // there are errors, render form again with sanitized values/error messages
       res.render("categoryForm", {
         title: "Create A Category",
         category,
         errors: errors.array(),
       });
-    } else {
-      // data from form is valid
-      // make sure category with same name doesn't already exist
-      const existingCategory = await Category.findOne({
-        name: req.body.name,
-      }).exec();
-
-      if (existingCategory) {
-        res.redirect(existingCategory.url);
-      } else {
-        // save category to db
-        await category.save();
-        res.redirect(category.url);
-      }
+      return;
     }
+
+    // data from form is valid
+    // make sure category with same name doesn't already exist
+    const existingCategory = await Category.findOne({
+      name: req.body.name,
+    }).exec();
+
+    if (existingCategory) {
+      res.redirect(existingCategory.url);
+      return;
+    }
+
+    // save category to db
+    await category.save();
+    res.redirect(category.url);
   }),
 ];
 
@@ -133,7 +135,7 @@ exports.updateCategoryPost = [
     .escape(),
   body(
     "description",
-    "Category description must be at least 10 characters long.",
+    "Category description must be at least 10 characters long."
   )
     .trim()
     .isLength({ min: 10 })
@@ -150,18 +152,19 @@ exports.updateCategoryPost = [
       _id: req.params.id,
     });
 
+    // there are errors, render form again with sanitized values/error messages
     if (!errors.isEmpty()) {
-      // there are errors, render form again with sanitized values/error messages
       res.render("categoryForm", {
         title: "Update A Category",
         category,
         errors: errors.array(),
       });
-    } else {
-      // data from form is valid, update existing category with new data
-      await Category.findByIdAndUpdate(req.params.id, category).exec();
-      res.redirect(category.url);
+      return;
     }
+
+    // data from form is valid, update existing category with new data
+    await Category.findByIdAndUpdate(req.params.id, category).exec();
+    res.redirect(category.url);
   }),
 ];
 
@@ -199,9 +202,10 @@ exports.deleteCategoryPost = asyncHandler(async (req, res, next) => {
   if (products.length > 0) {
     // category has products, render form again with products
     res.render("categoryDelete", { category, products });
-  } else {
-    // category has no products, delete category
-    await Category.findByIdAndRemove(req.params.id).exec();
-    res.redirect("/categories/all");
+    return;
   }
+
+  // category has no products, delete category
+  await Category.findByIdAndRemove(req.params.id).exec();
+  res.redirect("/categories/all");
 });
