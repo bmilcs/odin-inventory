@@ -7,13 +7,14 @@
     <link rel="stylesheet" href="/stylesheets/style.css" />
     <title>Inventory App: Express | MongoDB | TailwindCSS [bmilcs]</title>
   </head>
-  <body class="font-sans text-neutral-700 bg-neutral-200 flex flex-col h-screen justify-start">
-    <header class="bg-neutral-200 p-4 my-1 md:my-4 lg:my-6">
+  <body class="font-sans text-neutral-700 bg-neutral-200 flex flex-col h-screen justify-start ">
+    <header class="flex justify-center mx-2">
+      <div class="bg-neutral-300 text-neutral-800 px-4 w-full shadow-md max-w-screen-lg rounded-md flex-1 mt-2 p-2 my-1 md:my-4 lg:my-6">
       <div
         class="mx-auto flex max-w-5xl flex-col items-center justify-between sm:flex-row sm:gap-8 md:justify-start"
       >
         <!-- page title -->
-        <h1 class="text-2xl font-extrabold tracking-tighter">INVENTORY</h1>
+        <h1 class="text-2xl font-extrabold tracking-tighter"><a class="hover:underline" href="/inventory/all">INVENTORY</a></h1>
         <!-- navigation -->
         <nav>
           <ul class="flex gap-4">
@@ -27,8 +28,9 @@
           </ul>
         </nav>
       </div>
+      </div>
     </header>
 
     <main class="mx-3">
-      <div class="mx-auto max-w-5xl my-3 md:my-6 lg:my-9 ">
+      <div class="mx-auto max-w-5xl my-6 md:my-8 lg:my-10 ">
 
