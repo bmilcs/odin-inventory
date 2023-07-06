@@ -1,1 +1,2 @@
-views/partials/**
+views/partials/header.ejs
+views/partials/footer.ejs
