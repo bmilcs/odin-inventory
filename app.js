@@ -5,6 +5,7 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const compression = require("compression");
+const helmet = require("helmet");
 const indexRouter = require("./routes/index");
 const inventoryRouter = require("./routes/inventory");
 const categoryRouter = require("./routes/category");
@@ -33,6 +34,9 @@ app.set("view engine", "ejs");
 
 // enable gzip compression: compress all routes
 app.use(compression());
+
+// enable helmet: vulnerability protection
+app.use(helmet());
 
 // express generator goodies
 app.use(logger("dev"));
