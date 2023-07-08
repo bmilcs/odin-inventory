@@ -6,6 +6,7 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const compression = require("compression");
 const helmet = require("helmet");
+const rateLimit = require("express-rate-limit");
 const indexRouter = require("./routes/index");
 const inventoryRouter = require("./routes/inventory");
 const categoryRouter = require("./routes/category");
@@ -37,6 +38,15 @@ app.use(compression());
 
 // enable helmet: vulnerability protection
 app.use(helmet());
+
+// enable rate limit: prevent brute force attacks
+const limiter = rateLimit({
+  windowMs: 1 * 60 * 1000, // 1 minute
+  max: 60,
+});
+
+// apply rate limiter to all requests
+app.use(limiter);
 
 // express generator goodies
 app.use(logger("dev"));
