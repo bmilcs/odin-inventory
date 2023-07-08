@@ -4,6 +4,7 @@ const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
+const compression = require("compression");
 const indexRouter = require("./routes/index");
 const inventoryRouter = require("./routes/inventory");
 const categoryRouter = require("./routes/category");
@@ -29,6 +30,9 @@ async function main() {
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
+
+// enable gzip compression: compress all routes
+app.use(compression());
 
 // express generator goodies
 app.use(logger("dev"));
