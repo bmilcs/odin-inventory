@@ -39,13 +39,12 @@ app.use(compression());
 // enable helmet: vulnerability protection
 app.use(helmet());
 
-// enable rate limit: prevent brute force attacks
+// prevent brute force attacks
+// apply rate limiter to all requests
 const limiter = rateLimit({
   windowMs: 1 * 60 * 1000, // 1 minute
-  max: 60,
+  max: 100,
 });
-
-// apply rate limiter to all requests
 app.use(limiter);
 
 // express generator goodies
