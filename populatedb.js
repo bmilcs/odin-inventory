@@ -41,6 +41,7 @@ async function createAllProducts() {
       11.99,
       10,
       categories[0],
+      "/images/image-1688837749228-367722343.png",
     ),
     createProduct(
       "EliteStrike Football",
@@ -48,6 +49,7 @@ async function createAllProducts() {
       14.99,
       8,
       categories[0],
+      "/images/image-1688836691183-288437035.webp",
     ),
     createProduct(
       "ProShot Tennis Racket",
@@ -55,6 +57,7 @@ async function createAllProducts() {
       29.99,
       5,
       categories[0],
+      "/images/image-1688836722195-775206366.jpg",
     ),
     createProduct(
       "TechMaster Laptop",
@@ -62,6 +65,7 @@ async function createAllProducts() {
       899.99,
       3,
       categories[1],
+      "/images/image-1688836744218-712618839.avif",
     ),
     createProduct(
       "SuperNova Smartphone",
@@ -69,6 +73,7 @@ async function createAllProducts() {
       699.99,
       5,
       categories[1],
+      "/images/image-1688836736683-940172720.webp",
     ),
     createProduct(
       "RoboBuddy Robot Toy",
@@ -76,6 +81,7 @@ async function createAllProducts() {
       39.99,
       10,
       categories[2],
+      "/images/image-1688836808001-948733312.webp",
     ),
     createProduct(
       "FunLand Playset",
@@ -83,6 +89,7 @@ async function createAllProducts() {
       79.99,
       7,
       categories[2],
+      "/images/image-1688836788343-600709019.jpeg",
     ),
     createProduct(
       "LaserBlast Nerf Gun",
@@ -90,6 +97,7 @@ async function createAllProducts() {
       24.99,
       15,
       categories[2],
+      "/images/image-1688836796661-693064041.jpg",
     ),
     createProduct(
       "ProFit Soccer Ball",
@@ -97,6 +105,7 @@ async function createAllProducts() {
       16.99,
       12,
       categories[0],
+      "/images/image-1688836712612-35650137.webp",
     ),
     createProduct(
       "TechWiz Gaming Mouse",
@@ -104,6 +113,7 @@ async function createAllProducts() {
       49.99,
       6,
       categories[1],
+      "/images/image-1688836753988-822720597.webp",
     ),
     createProduct(
       "AdventureExplorer Outdoor Set",
@@ -111,6 +121,7 @@ async function createAllProducts() {
       34.99,
       9,
       categories[2],
+      "/images/image-1688836769660-268431917.jpg",
     ),
     createProduct(
       "FitPro Dumbbell Set",
@@ -118,6 +129,7 @@ async function createAllProducts() {
       49.99,
       8,
       categories[0],
+      "/images/image-1688837781758-133124710.webp",
     ),
     createProduct(
       "SmartGear Smartwatch",
@@ -125,6 +137,7 @@ async function createAllProducts() {
       129.99,
       4,
       categories[1],
+      "/images/image-1688836729725-319945171.jpg",
     ),
     createProduct(
       "CreativeBuilder Building Blocks",
@@ -132,6 +145,7 @@ async function createAllProducts() {
       19.99,
       15,
       categories[2],
+      "/images/image-1688837732918-488478437.jpg",
     ),
     createProduct(
       "CozyHome Throw Blanket",
@@ -139,6 +153,7 @@ async function createAllProducts() {
       39.99,
       10,
       categories[3],
+      "/images/image-1688836895311-678249788.webp",
     ),
     createProduct(
       "AromaSense Essential Oil Diffuser",
@@ -146,6 +161,7 @@ async function createAllProducts() {
       29.99,
       8,
       categories[3],
+      "/images/image-1688836816697-252904417.jpg",
     ),
     createProduct(
       "ZenGarden Meditation Kit",
@@ -153,6 +169,7 @@ async function createAllProducts() {
       24.99,
       5,
       categories[3],
+      "/images/image-1688836924082-131486889.jpg",
     ),
     createProduct(
       "ElegantCandles Scented Candle Set",
@@ -160,6 +177,7 @@ async function createAllProducts() {
       19.99,
       12,
       categories[3],
+      "/images/image-1688836886098-454822275.jpg",
     ),
   ]);
 }
@@ -171,12 +189,20 @@ async function createCategory(name, description) {
   console.log(`Added Category: ${name}`);
 }
 
-async function createProduct(name, description, price, quantity, category) {
+async function createProduct(
+  name,
+  description,
+  price,
+  quantity,
+  category,
+  image,
+) {
   const productDetail = {
     name: name,
     description: description,
     price: price,
     quantity: quantity,
+    image: image,
   };
   if (category != false) productDetail.category = category;
 
