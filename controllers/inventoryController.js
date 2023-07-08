@@ -7,22 +7,31 @@ const multer = require("multer");
 const fs = require("fs");
 const path = require("path");
 
-// configure Multer storage for photo uploads
-
+// configure multer storage for photo uploads
 const imageFileFilter = function (req, file, cb) {
-  // Check if the file is an image
+  // no file present, continue without an error
+  if (!file) {
+    return cb(null, true);
+  }
+
+  // check if the file is an image
   if (!file.mimetype.startsWith("image/")) {
     return cb(new Error("Only image files are allowed."), false);
   }
 
-  // Accept the file
+  // if the file is an image, continue without an error
   cb(null, true);
 };
 
 const storage = multer.diskStorage({
   destination: "public/images/",
   filename: function (req, file, cb) {
-    // Generate a unique filename with the original extension
+    // no file is present, continue without generating a filename
+    if (!file) {
+      return cb(null, "");
+    }
+
+    // generate a unique filename with the original extension
     const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
     const originalExtension = file.originalname.split(".").pop();
     const filename =
@@ -118,7 +127,7 @@ exports.createProductPost = [
       category: req.body.category,
       price: req.body.price,
       quantity: req.body.quantity,
-      image: `/images/${req.file.filename}`,
+      image: req.file ? `/images/${req.file.filename}` : null,
     });
 
     // if there are errors, render the form with sanitized values / error messages
