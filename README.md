@@ -37,15 +37,16 @@ The database Schemas are as follows:
 
 ### High Level Breakdown
 
-- Clients enter in a URL
-- The URL is matched to an HTTP route & verb, defined in `app.js` and then passed to a module within the `/routes` directory
-- Routes pass the `req` data to a controller middleware function, defined in `/controllers`
-- Controller functions process the request. They determine the flow of the application, executing a combinations of the following tasks depending on the request:
+- Clients submits an HTTP request
+- Server matches the HTTP request to middleware declared in `app.js`
+- Middleware then passes the request to the matching route module within the `/routes` directory
+- Routes pass the request to a controller function, defined in `/controllers`
+- Controller functions process the request. They determine the flow of the application, executing any of the following tasks:
   - Validate form data from `POST` requests
   - Perform CRUD operations in the database: create/read/update/delete
-  - Fill out variables in our templates (`/views`) and sends the result back to the client
+  - Fill out variables in our templates (`/views`) & sends the response back to the client
 
-### Deployment Notes
+### Deployment Breakdown
 
 This project was deployed to `fly.io` using their CLI tool `flyctl`. The following steps were taken:
 
@@ -57,9 +58,9 @@ This project was deployed to `fly.io` using their CLI tool `flyctl`. The followi
 - Reduced deployment to a single instance or machine to prevent charges
 - Profit
 
-### Problems Overcome
+### Problem Solved
 
-Unfortunately, image file uploads did not work using a standard deployment. After some research, I realized a persistent storage volume was the solution. Using the CLI, I:
+Unfortunately, file uploads did not work using a standard deployment. After some research, I realized a persistent storage volume was the solution. Using the CLI, I:
 
 - Created a 1GB storage volume in the same location as my single machine/instance
 - Connected to the instance via SSH using `flyctl`
@@ -72,9 +73,9 @@ Unfortunately, image file uploads did not work using a standard deployment. Afte
   ```
 - Deployed the project once again
 
-While developing the file upload system, it became apparent that uploads were going to pile up quickly. To solve this issue, `fs.unlink` was utilized to delete the old image file when a new one was uploaded.
+While implementing file uploads, it became apparent that files were going to pile up quickly. To solve this issue, NodeJS `fs` (file system) module was utilized to delete old images when a new one is uploaded.
 
-Another issue that I had to solve was handling invalid IDs passed as a parameter to a URL. Whenever an invalid ID was passed as a URL parameter, MongoDB would complain of an invalid `ObjectId` and it would stop controller functions from reaching custom error handling. To solve this issue, I added the following checks to prevent unnecessary DB calls & to issue the proper error handling:
+Another issue that I had to solve was invalid IDs passed as a URL parameter. Whenever an invalid ID is processed by a controller function, MongoDB would complain of an invalid `ObjectId` and it would stop controller functions from reaching the custom error handling defined below it. To solve this issue, I added the following, **which had an added benefit of preventing unnecessary DB calls**:
 
 ```js
 // return the results of a db query if a valid ObjectID is passed
@@ -83,7 +84,7 @@ const product = mongoose.Types.ObjectId.isValid(productId)
   ? await Product.findById(productId).exec()
   : null;
 
-// product not found: throw an error
+// product not found OR invalid ID: throw an error
 if (product === null) {
   const err = new Error("Product not found");
   err.status = 404;
